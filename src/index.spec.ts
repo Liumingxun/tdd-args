@@ -18,7 +18,7 @@ const options = {
   })
 })
 
-test.todo('read options name', () => {
+test('read options', () => {
   const options = {
     l: Boolean,
     p: Number,
@@ -26,13 +26,12 @@ test.todo('read options name', () => {
     a: Array,
   }
   const args = parseArgs(options, ['-l', '-p', '8080', '-d', '/usr/logs', '-a', 'this', 'is', 'a', 'array'])
-  expect(Object.keys(args)).toEqual(['-l', '-p', '-d', '-a'])
+  expect(Object.keys(args)).toEqual(['l', 'p', 'd', 'a'])
 })
 
 test('read l prop', () => {
   const options = {l: Boolean}
   const args = parseArgs(options, ['-l'])
-  console.log(args)
   expect(args).toEqual({l: true})
 })
 
@@ -40,6 +39,19 @@ test('read p prop', () => {
   const options = {p: Number}
   const args = parseArgs(options, ['-p', '8080'])
   expect(args).toEqual({p: 8080})
+})
+
+test('read d prop', () => {
+  const options = {d: String}
+  const args = parseArgs(options, ['-d', '/usr/logs'])
+  expect(args).toEqual({d: '/usr/logs'})
+})
+
+
+test('assign kv into object', () => {
+  const obj = {a: 'a', b: 'b'}
+  Object.assign(obj, {c: 'c'})
+  expect(obj).toEqual({a: 'a', b: 'b', c: 'c'})
 })
 
 
