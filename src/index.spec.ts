@@ -2,11 +2,11 @@ import {test, expect} from 'vitest'
 import {parseArgs} from './index'
 
 test('happy path', () => {
-const options = {
-  l: Boolean,
-  p: Number,
-  d: String,
-}
+  const options = {
+    l: Boolean,
+    p: Number,
+    d: String,
+  }
   // 定义方法对外的使用方法
   const args = parseArgs(options, ['-l', '-p', '8080', '-d', '/usr/logs'])
   expect(args).toEqual({
@@ -43,7 +43,6 @@ test('read d prop', () => {
   const args = parseArgs(options, ['-d', '/usr/logs'])
   expect(args).toEqual({d: '/usr/logs'})
 })
-
 
 test('assign kv into object', () => {
   const obj = {a: 'a', b: 'b'}
