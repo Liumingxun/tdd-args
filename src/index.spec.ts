@@ -1,20 +1,18 @@
 import {test, expect} from 'vitest'
 import {parseArgs} from './index'
 
-test.todo('happy path', () => {
+test('happy path', () => {
 const options = {
   l: Boolean,
   p: Number,
   d: String,
-  a: Array,
 }
   // 定义方法对外的使用方法
-  const args = parseArgs(options, ['-l', '-p', '8080', '-d', '/usr/logs', '-a', 'this', 'is', 'a', 'array'])
+  const args = parseArgs(options, ['-l', '-p', '8080', '-d', '/usr/logs'])
   expect(args).toEqual({
     l: true,
     p: 8080,
     d: '/usr/logs',
-    a: ['this', 'is', 'a', 'array']
   })
 })
 
@@ -23,10 +21,9 @@ test('read options', () => {
     l: Boolean,
     p: Number,
     d: String,
-    a: Array,
   }
-  const args = parseArgs(options, ['-l', '-p', '8080', '-d', '/usr/logs', '-a', 'this', 'is', 'a', 'array'])
-  expect(Object.keys(args)).toEqual(['l', 'p', 'd', 'a'])
+  const args = parseArgs(options, ['-l', '-p', '8080', '-d', '/usr/logs'])
+  expect(Object.keys(args)).toEqual(['l', 'p', 'd'])
 })
 
 test('read l prop', () => {
@@ -52,6 +49,22 @@ test('assign kv into object', () => {
   const obj = {a: 'a', b: 'b'}
   Object.assign(obj, {c: 'c'})
   expect(obj).toEqual({a: 'a', b: 'b', c: 'c'})
+})
+
+test('缺少预定属性不解析', () => {
+  const options = {
+    l: Boolean,
+    p: Number,
+    d: String,
+    a: Array,
+    w: String
+  }
+  const args = parseArgs(options, ['-l', '-p', '8080', '-d', '/usr/logs'])
+  expect(args).toEqual({
+    l: true,
+    p: 8080,
+    d: '/usr/logs',
+  })
 })
 
 
